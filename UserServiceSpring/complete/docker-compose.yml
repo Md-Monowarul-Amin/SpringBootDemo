@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.19.5
+    container_name: complete-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200 || exit 1"]
+      interval: 10s
+      retries: 5
+
+  springboot-app:
+    build: .
+    container_name: complete-springboot-app
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    # environment:
+    #   - SPRING_ELASTICSEARCH_URIS=http://elasticsearch:9200
+    #   - SPRING_ELASTICSEARCH_USERNAME=
+    #   - SPRING_ELASTICSEARCH_PASSWORD=

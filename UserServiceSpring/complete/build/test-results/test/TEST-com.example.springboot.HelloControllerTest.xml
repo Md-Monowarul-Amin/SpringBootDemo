@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.springboot.HelloControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-10-13T13:13:33" hostname="TN-LAP-0270" time="0.349">
+  <properties/>
+  <testcase name="getHello()" classname="com.example.springboot.HelloControllerTest" time="0.349"/>
+  <system-out><![CDATA[19:13:31.004 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.springboot.HelloControllerTest]: HelloControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:13:31.058 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.springboot.Application for test class com.example.springboot.HelloControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2025-10-13T19:13:31.248+06:00  INFO 40140 --- [    Test worker] c.e.springboot.HelloControllerTest       : Starting HelloControllerTest using Java 17.0.16 with PID 40140 (started by technonext in /home/technonext/Desktop/UserServiceSpring/complete)
+2025-10-13T19:13:31.248+06:00 DEBUG 40140 --- [    Test worker] c.e.springboot.HelloControllerTest       : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-10-13T19:13:31.248+06:00  INFO 40140 --- [    Test worker] c.e.springboot.HelloControllerTest       : No active profile set, falling back to 1 default profile: "default"
+2025-10-13T19:13:31.257+06:00 DEBUG 40140 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@a619c2
+2025-10-13T19:13:31.624+06:00  INFO 40140 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-13T19:13:31.625+06:00  INFO 40140 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Elasticsearch repositories in DEFAULT mode.
+2025-10-13T19:13:31.646+06:00  INFO 40140 --- [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.example.springboot.repository.ProductRepository; If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository
+2025-10-13T19:13:31.647+06:00  INFO 40140 --- [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.example.springboot.repository.UserRepository; If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository
+2025-10-13T19:13:31.656+06:00  INFO 40140 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 1 Elasticsearch repository interface.
+2025-10-13T19:13:31.659+06:00  INFO 40140 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-13T19:13:31.659+06:00  INFO 40140 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Reactive Elasticsearch repositories in DEFAULT mode.
+2025-10-13T19:13:31.663+06:00  INFO 40140 --- [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.example.springboot.repository.ProductRepository; If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository
+2025-10-13T19:13:31.664+06:00  INFO 40140 --- [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.example.springboot.repository.UserRepository; If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository
+2025-10-13T19:13:31.664+06:00  INFO 40140 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 Reactive Elasticsearch repository interfaces.
+2025-10-13T19:13:31.668+06:00  INFO 40140 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-13T19:13:31.668+06:00  INFO 40140 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-13T19:13:31.673+06:00  INFO 40140 --- [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.example.springboot.repository.ProductDocumentRepository; If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: jakarta.persistence.Entity, jakarta.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository
+2025-10-13T19:13:31.676+06:00  INFO 40140 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 2 JPA repository interfaces.
+2025-10-13T19:13:31.878+06:00  INFO 40140 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-13T19:13:31.900+06:00  INFO 40140 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-10-13T19:13:31.913+06:00  INFO 40140 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-13T19:13:32.011+06:00  INFO 40140 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-13T19:13:32.021+06:00  INFO 40140 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-13T19:13:32.100+06:00  INFO 40140 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:userdb user=SA
+2025-10-13T19:13:32.101+06:00  INFO 40140 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-13T19:13:32.111+06:00  WARN 40140 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-13T19:13:32.424+06:00  INFO 40140 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: create table product (id uuid not null, description varchar(255), name varchar(255), price float(53) not null, primary key (id))
+Hibernate: create table users (id bigint generated by default as identity, email varchar(255) not null, password varchar(255) not null, username varchar(255) not null, primary key (id))
+Hibernate: alter table if exists users drop constraint if exists UK_6dotkott2kjsp8vw4d0m25fb7
+Hibernate: alter table if exists users add constraint UK_6dotkott2kjsp8vw4d0m25fb7 unique (email)
+Hibernate: alter table if exists users drop constraint if exists UK_r43af9ap4edm43mmtq01oddj6
+Hibernate: alter table if exists users add constraint UK_r43af9ap4edm43mmtq01oddj6 unique (username)
+2025-10-13T19:13:32.457+06:00  INFO 40140 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-13T19:13:32.488+06:00  INFO 40140 --- [    Test worker] n.d.b.g.c.a.GrpcClientAutoConfiguration  : Detected grpc-netty-shaded: Creating ShadedNettyChannelFactory + InProcessChannelFactory
+2025-10-13T19:13:33.008+06:00  WARN 40140 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-13T19:13:33.058+06:00 DEBUG 40140 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 19 mappings in 'requestMappingHandlerMapping'
+2025-10-13T19:13:33.109+06:00 DEBUG 40140 --- [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-10-13T19:13:33.126+06:00 DEBUG 40140 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-10-13T19:13:33.142+06:00 DEBUG 40140 --- [    Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-10-13T19:13:33.156+06:00  INFO 40140 --- [    Test worker] g.s.a.GrpcServerFactoryAutoConfiguration : Detected grpc-netty-shaded: Creating ShadedNettyGrpcServerFactory
+2025-10-13T19:13:33.219+06:00  INFO 40140 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console-user'. Database available at 'jdbc:h2:mem:userdb'
+2025-10-13T19:13:33.246+06:00  INFO 40140 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-10-13T19:13:33.246+06:00  INFO 40140 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-10-13T19:13:33.248+06:00  INFO 40140 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-10-13T19:13:33.258+06:00  INFO 40140 --- [    Test worker] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: product.ProductService, bean: productGrpcServiceImpl, class: com.example.springboot.service.ProductGrpcServiceImpl
+2025-10-13T19:13:33.258+06:00  INFO 40140 --- [    Test worker] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: UserService, bean: userGrpcServiceImpl, class: com.example.springboot.service.UserGrpcServiceImpl
+2025-10-13T19:13:33.258+06:00  INFO 40140 --- [    Test worker] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: grpc.health.v1.Health, bean: grpcHealthService, class: io.grpc.protobuf.services.HealthServiceImpl
+2025-10-13T19:13:33.258+06:00  INFO 40140 --- [    Test worker] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: grpc.reflection.v1alpha.ServerReflection, bean: protoReflectionService, class: io.grpc.protobuf.services.ProtoReflectionService
+2025-10-13T19:13:33.288+06:00  INFO 40140 --- [    Test worker] n.d.b.g.s.s.GrpcServerLifecycle          : gRPC Server started, listening on address: *, port: 9091
+2025-10-13T19:13:33.294+06:00  INFO 40140 --- [    Test worker] c.e.springboot.HelloControllerTest       : Started HelloControllerTest in 2.167 seconds (process running for 2.68)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

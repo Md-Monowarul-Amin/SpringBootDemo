@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.grpc";
+option java_outer_classname = "ProductProto";
+
+package product;
+
+service ProductService {
+  // Create a new product
+  rpc CreateProduct (CreateProductRequest) returns (ProductResponse) {}
+  
+  // Get a product by ID
+  rpc GetProduct (GetProductRequest) returns (ProductResponse) {}
+  
+  // Get all products
+  rpc GetAllProducts (EmptyRequest) returns (ProductListResponse) {}
+  
+  // Update a product
+  rpc UpdateProduct (UpdateProductRequest) returns (ProductResponse) {}
+  
+  // Delete a product
+  rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse) {}
+}
+
+// Messages for Product
+message ProductMessage {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+}
+
+// Create Product Request
+message CreateProductRequest {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+}
+
+// Get Product Request
+message GetProductRequest {
+  string id = 1;
+}
+
+// Update Product Request
+message UpdateProductRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+}
+
+// Delete Product Request
+message DeleteProductRequest {
+  string id = 1;
+}
+
+// Empty Request (for GetAll)
+message EmptyRequest {}
+
+// Single Product Response
+message ProductResponse {
+  bool success = 1;
+  string message = 2;
+  ProductMessage product = 3;
+}
+
+// Product List Response
+message ProductListResponse {
+  bool success = 1;
+  string message = 2;
+  repeated ProductMessage products = 3;
+}
+
+// Delete Response
+message DeleteProductResponse {
+  bool success = 1;
+  string message = 2;
+}
