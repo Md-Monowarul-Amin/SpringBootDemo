@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import java.util.UUID;
 
 @Entity
-public class Product{
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,14 +17,15 @@ public class Product{
     private String description;
     private double price;
 
-    public Product(){}
-
-    public Product(String name, String description, double price){
-        this.name=name;
-        this.description=description;
-        this.price=price;
+    public Product() {
     }
-    
+
+    public Product(String name, String description, double price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
     public UUID getId() {
         return this.id;
     }
@@ -57,4 +58,3 @@ public class Product{
         this.price = price;
     }
 }
-

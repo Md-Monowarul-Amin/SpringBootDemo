@@ -19,9 +19,11 @@ import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.io.IOException;
@@ -29,19 +31,24 @@ import java.io.IOException;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    private static final String PRODUCT_CACHE_PREFIX = "product"; // Redis key prefix
+
     private final ProductRepository productRepository;
     private final ProductDocumentRepository productDocumentRepository;
     private final ModelMapper modelMapper;
     private final ElasticsearchClient client;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     public ProductServiceImpl(ProductRepository productRepository,
-                              ProductDocumentRepository productDocumentRepository,
-                              ModelMapper modelMapper,
-                              ElasticsearchClient client) {
+            ProductDocumentRepository productDocumentRepository,
+            ModelMapper modelMapper,
+            ElasticsearchClient client,
+            RedisTemplate<String, Object> redisTemplate) {
         this.productRepository = productRepository;
         this.productDocumentRepository = productDocumentRepository;
         this.modelMapper = modelMapper;
         this.client = client;
+        this.redisTemplate = redisTemplate;
     }
 
     // Convert Product entity to ProductDTO
@@ -67,8 +74,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductById(UUID id) {
+        String cacheKey = PRODUCT_CACHE_PREFIX + id;
+
+        ProductDTO cachedProduct = (ProductDTO) redisTemplate.opsForValue().get(cacheKey);
+        if (cachedProduct != null) {
+            System.out.println("Retrived from redis cache: " + id);
+            return cachedProduct;
+        }
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
-        return modelMapper.map(product, ProductDTO.class);
+        ProductDTO productDto = modelMapper.map(product, ProductDTO.class);
+        redisTemplate.opsForValue().set(cacheKey, productDto, 10, TimeUnit.MINUTES);
+        return productDto;
     }
 
     @Override
@@ -76,15 +92,22 @@ public class ProductServiceImpl implements ProductService {
         Product product = modelMapper.map(productDTO, Product.class);
         Product savedProduct = productRepository.save(product);
         productDocumentRepository.save(modelMapper.map(productDTO, ProductDocument.class));
+
+        redisTemplate.opsForValue().set(PRODUCT_CACHE_PREFIX + savedProduct.getId(),
+                productDTO, 10, TimeUnit.MINUTES);
         return modelMapper.map(savedProduct, ProductDTO.class);
     }
 
     @Override
     public ProductDTO updateProduct(UUID id, ProductDTO productDTO) {
-        Product existingProduct = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
         modelMapper.map(productDTO, existingProduct);
         Product updatedProduct = productRepository.save(existingProduct);
         productDocumentRepository.save(modelMapper.map(updatedProduct, ProductDocument.class));
+
+        redisTemplate.opsForValue().set(PRODUCT_CACHE_PREFIX + id, productDTO, 10, TimeUnit.MINUTES);
+
         return modelMapper.map(updatedProduct, ProductDTO.class);
     }
 
@@ -93,29 +116,28 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
         productRepository.delete(product);
         productDocumentRepository.deleteById(product.getId());
+        redisTemplate.delete(PRODUCT_CACHE_PREFIX + id);
     }
 
     @Override
     public List<ProductDTO> search(String keyword) {
-        try{
+        try {
             SearchResponse<ProductDocument> response = client.search(s -> s
-                .index("products")
-                .query(q -> q
-                    .multiMatch(m -> m
-                        .fields("name", "description")
-                        .query(keyword)
-                        .fuzziness("AUTO")
-                    )
-                ), ProductDocument.class);
+                    .index("products")
+                    .query(q -> q
+                            .multiMatch(m -> m
+                                    .fields("name", "description")
+                                    .query(keyword)
+                                    .fuzziness("AUTO"))),
+                    ProductDocument.class);
 
-        return response.hits().hits().stream()
-                .map(hit -> hit.source())
-                .map(doc -> modelMapper.map(doc, ProductDTO.class))
-                .toList();
-        }
-        catch (IOException e) {
+            return response.hits().hits().stream()
+                    .map(hit -> hit.source())
+                    .map(doc -> modelMapper.map(doc, ProductDTO.class))
+                    .toList();
+        } catch (IOException e) {
             throw new RuntimeException("Elasticsearch search failed...!!", e);
         }
-        
+
     }
 }
