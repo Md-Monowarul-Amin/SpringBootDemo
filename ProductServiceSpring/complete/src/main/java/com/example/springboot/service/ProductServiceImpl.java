@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
+
 // import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.Query;
 // import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -19,7 +23,9 @@ import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.List;
 import java.util.UUID;
@@ -37,18 +43,15 @@ public class ProductServiceImpl implements ProductService {
     private final ProductDocumentRepository productDocumentRepository;
     private final ModelMapper modelMapper;
     private final ElasticsearchClient client;
-    private final RedisTemplate<String, Object> redisTemplate;
 
     public ProductServiceImpl(ProductRepository productRepository,
             ProductDocumentRepository productDocumentRepository,
             ModelMapper modelMapper,
-            ElasticsearchClient client,
-            RedisTemplate<String, Object> redisTemplate) {
+            ElasticsearchClient client) {
         this.productRepository = productRepository;
         this.productDocumentRepository = productDocumentRepository;
         this.modelMapper = modelMapper;
         this.client = client;
-        this.redisTemplate = redisTemplate;
     }
 
     // Convert Product entity to ProductDTO
@@ -73,50 +76,47 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(value = "product", key = "#id")
     public ProductDTO getProductById(UUID id) {
-        String cacheKey = PRODUCT_CACHE_PREFIX + id;
-
-        ProductDTO cachedProduct = (ProductDTO) redisTemplate.opsForValue().get(cacheKey);
-        if (cachedProduct != null) {
-            System.out.println("Retrived from redis cache: " + id);
-            return cachedProduct;
-        }
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
         ProductDTO productDto = modelMapper.map(product, ProductDTO.class);
-        redisTemplate.opsForValue().set(cacheKey, productDto, 10, TimeUnit.MINUTES);
+
         return productDto;
     }
 
     @Override
+    @CachePut(value = "product", key = "#result.id")
     public ProductDTO createProduct(ProductDTO productDTO) {
         Product product = modelMapper.map(productDTO, Product.class);
         Product savedProduct = productRepository.save(product);
         productDocumentRepository.save(modelMapper.map(productDTO, ProductDocument.class));
 
-        redisTemplate.opsForValue().set(PRODUCT_CACHE_PREFIX + savedProduct.getId(),
-                productDTO, 10, TimeUnit.MINUTES);
         return modelMapper.map(savedProduct, ProductDTO.class);
     }
 
     @Override
+    @CachePut(value = "product", key = "#id")
     public ProductDTO updateProduct(UUID id, ProductDTO productDTO) {
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        modelMapper.map(productDTO, existingProduct);
+
+        // Manually set fields to avoid overwriting ID
+        existingProduct.setName(productDTO.getName());
+        existingProduct.setDescription(productDTO.getDescription());
+        existingProduct.setPrice(productDTO.getPrice());
+
         Product updatedProduct = productRepository.save(existingProduct);
         productDocumentRepository.save(modelMapper.map(updatedProduct, ProductDocument.class));
-
-        redisTemplate.opsForValue().set(PRODUCT_CACHE_PREFIX + id, productDTO, 10, TimeUnit.MINUTES);
 
         return modelMapper.map(updatedProduct, ProductDTO.class);
     }
 
     @Override
+    @CacheEvict(value = "product", key = "#id")
     public void deleteProduct(UUID id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
         productRepository.delete(product);
         productDocumentRepository.deleteById(product.getId());
-        redisTemplate.delete(PRODUCT_CACHE_PREFIX + id);
     }
 
     @Override
