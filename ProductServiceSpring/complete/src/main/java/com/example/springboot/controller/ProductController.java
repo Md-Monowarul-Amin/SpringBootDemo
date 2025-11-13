@@ -1,11 +1,16 @@
 package com.example.springboot.controller;
 
+import com.example.springboot.config.RabbitMQConfig;
 import com.example.springboot.entity.Product;
 import com.example.springboot.dto.ProductDTO;
+import com.example.springboot.rabbitMQ.producer.ProductProducer;
 import com.example.springboot.service.ProductService;
 import com.example.springboot.service.ProductServiceImpl;
 
+import static com.example.springboot.utils.Constants.TEST_NAME;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +22,17 @@ import java.util.UUID;
 public class ProductController {
 
     private final ProductService productService;
+    private final String testName;
+    private ProductProducer productProducer;
 
-    public ProductController(ProductServiceImpl productService){
+
+    public ProductController(ProductServiceImpl productService, @Value("${test.name}") String testName, ProductProducer productProducer) {
+
         this.productService = productService;
+        this.testName = testName;
+        this.productProducer = productProducer;
     }
+
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         List<ProductDTO> products = productService.getAllProducts();
@@ -53,9 +65,18 @@ public class ProductController {
 
     // Enhanced search endpoint
     @GetMapping("/search")
-    public List<ProductDTO> search(
-            @RequestParam String keyword
-    ) {
+    public List<ProductDTO> search(@RequestParam String keyword) {
         return productService.search(keyword);
+    }
+
+    @GetMapping("/test-environment-variable")
+    public String getEnvironmentVariable() {
+        return this.testName;
+    }
+
+    @GetMapping("/send-message")
+    public String sendMessage(@RequestParam String message) {
+        this.productProducer.sendMessage(message);
+        return message + "sent successfully";
     }
 }

@@ -1,8 +1,7 @@
 package com.example.springboot.controller;
 
-import com.example.springboot.client.ProductGrpcClient;
 import com.example.grpc.ProductListResponse;
-import com.example.springboot.client.UserGrpcClient;
+import com.example.springboot.client.ProductGrpcClient;
 import com.example.springboot.dto.*;
 import com.example.springboot.service.UserService;
 import jakarta.validation.Valid;

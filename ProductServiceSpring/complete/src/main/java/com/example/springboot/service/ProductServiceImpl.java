@@ -89,7 +89,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO createProduct(ProductDTO productDTO) {
         Product product = modelMapper.map(productDTO, Product.class);
         Product savedProduct = productRepository.save(product);
-        productDocumentRepository.save(modelMapper.map(productDTO, ProductDocument.class));
+        ProductDocument productDocument = mapToDocument(product);
+        productDocumentRepository.saveProduct(productDocument);
 
         return modelMapper.map(savedProduct, ProductDTO.class);
     }
@@ -106,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
         existingProduct.setPrice(productDTO.getPrice());
 
         Product updatedProduct = productRepository.save(existingProduct);
-        productDocumentRepository.save(modelMapper.map(updatedProduct, ProductDocument.class));
+        productDocumentRepository.saveProduct(modelMapper.map(updatedProduct, ProductDocument.class));
 
         return modelMapper.map(updatedProduct, ProductDTO.class);
     }
@@ -116,7 +117,7 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(UUID id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
         productRepository.delete(product);
-        productDocumentRepository.deleteById(product.getId());
+//        productDocumentRepository.deleteById(product.getId());
     }
 
     @Override
@@ -125,10 +126,9 @@ public class ProductServiceImpl implements ProductService {
             SearchResponse<ProductDocument> response = client.search(s -> s
                     .index("products")
                     .query(q -> q
-                            .multiMatch(m -> m
-                                    .fields("name", "description")
-                                    .query(keyword)
-                                    .fuzziness("AUTO"))),
+                            .match(m -> m
+                                    .field("name")
+                                    .query(keyword))),
                     ProductDocument.class);
 
             return response.hits().hits().stream()
