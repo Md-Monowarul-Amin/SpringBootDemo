@@ -1,0 +1,255 @@
+{
+  "took" : 2,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 7,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "shops-v2",
+        "_id" : "shop-208",
+        "_score" : 1.0,
+        "_source" : {
+          "shop_id" : 208,
+          "id" : "shop-208",
+          "name_exact" : "Smashed Burgers - Baridhara",
+          "name_fuzzy" : "Smashed Burgers - Baridhara",
+          "name_typeahead" : "Smashed Burgers - Baridhara",
+          "shop_type_id" : 1,
+          "rating" : 3.765,
+          "reviews" : 20,
+          "commission" : 5,
+          "order_count" : 142,
+          "popularity_value" : 400,
+          "ranking_score" : 4.4380846,
+          "status" : 1,
+          "address" : "Baridhara",
+          "image" : "/restaurant-service/download-772a-20241104103151981.png",
+          "search_tags" : [
+            "isdelivery",
+            "ispickup"
+          ],
+          "service_types" : [
+            "isdelivery",
+            "ispickup"
+          ],
+          "location" : {
+            "lat" : 23.80802199492246,
+            "lon" : 90.42104071617734
+          }
+        }
+      },
+      {
+        "_index" : "shops-v2",
+        "_id" : "shop-888",
+        "_score" : 1.0,
+        "_source" : {
+          "shop_id" : 888,
+          "id" : "shop-888",
+          "name_exact" : "Burger King Gulshan 3",
+          "name_fuzzy" : "Burger King Gulshan 3",
+          "name_typeahead" : "Burger King Gulshan 3",
+          "shop_type_id" : 1,
+          "rating" : 0,
+          "reviews" : 0,
+          "commission" : 20,
+          "order_count" : 0,
+          "popularity_value" : 0,
+          "ranking_score" : 80,
+          "status" : 1,
+          "address" : "panthapath",
+          "image" : "/restaurant-service/40612-5c93-20250922070053012.jpg",
+          "search_tags" : [
+            "isdelivery",
+            "ispickup"
+          ],
+          "service_types" : [
+            "isdelivery",
+            "ispickup"
+          ],
+          "location" : {
+            "lat" : 23.7923386327837,
+            "lon" : 90.41548867196656
+          }
+        }
+      },
+      {
+        "_index" : "shops-v2",
+        "_id" : "shop-886",
+        "_score" : 1.0,
+        "_source" : {
+          "shop_id" : 886,
+          "id" : "shop-886",
+          "name_exact" : "Burger King Gulshan 2",
+          "name_fuzzy" : "Burger King Gulshan 2",
+          "name_typeahead" : "Burger King Gulshan 2",
+          "shop_type_id" : 1,
+          "rating" : 0,
+          "reviews" : 0,
+          "commission" : 10,
+          "order_count" : 0,
+          "popularity_value" : 0,
+          "ranking_score" : 80,
+          "status" : 1,
+          "address" : "panthapath",
+          "image" : "/restaurant-service/8986718-238a-20250922055556374.jpg",
+          "search_tags" : [
+            "isdelivery",
+            "ispickup"
+          ],
+          "service_types" : [
+            "isdelivery",
+            "ispickup"
+          ],
+          "location" : {
+            "lat" : 23.78776381576264,
+            "lon" : 90.41649718255616
+          }
+        }
+      },
+      {
+        "_index" : "shops-v2",
+        "_id" : "shop-151",
+        "_score" : 1.0,
+        "_source" : {
+          "shop_id" : 151,
+          "id" : "shop-151",
+          "name_exact" : "Smashed Burgers - Gulshan 1",
+          "name_fuzzy" : "Smashed Burgers - Gulshan 1",
+          "name_typeahead" : "Smashed Burgers - Gulshan 1",
+          "shop_type_id" : 1,
+          "rating" : 0,
+          "reviews" : 0,
+          "commission" : 0,
+          "order_count" : 10,
+          "popularity_value" : 400,
+          "ranking_score" : 2.1492393,
+          "status" : 1,
+          "address" : "Gulshan 1",
+          "image" : "/restaurant-service/download-772a-20241104103151981.png",
+          "search_tags" : [
+            "isdelivery",
+            "ispickup"
+          ],
+          "service_types" : [
+            "isdelivery",
+            "ispickup"
+          ],
+          "location" : {
+            "lat" : 23.78185622588416,
+            "lon" : 90.41724360080258
+          }
+        }
+      },
+      {
+        "_index" : "shops-v2",
+        "_id" : "shop-438",
+        "_score" : 1.0,
+        "_source" : {
+          "shop_id" : 438,
+          "id" : "shop-438",
+          "name_exact" : "Pizza Hut (Credit)",
+          "name_fuzzy" : "Pizza Hut (Credit)",
+          "name_typeahead" : "Pizza Hut (Credit)",
+          "shop_type_id" : 1,
+          "rating" : 0,
+          "reviews" : 0,
+          "commission" : 5,
+          "order_count" : 6,
+          "popularity_value" : 400,
+          "ranking_score" : 2.070504,
+          "status" : 1,
+          "address" : "Gulshan",
+          "image" : "/restaurant-service/home-logo-a32d-20241230075514196.png",
+          "search_tags" : [
+            "isdelivery",
+            "isdine",
+            "ispickup"
+          ],
+          "service_types" : [
+            "isdelivery",
+            "isdine",
+            "ispickup"
+          ]
+        }
+      },
+      {
+        "_index" : "shops-v2",
+        "_id" : "shop-439",
+        "_score" : 1.0,
+        "_source" : {
+          "shop_id" : 439,
+          "id" : "shop-439",
+          "name_exact" : "Pizza Hut Sherpur",
+          "name_fuzzy" : "Pizza Hut Sherpur",
+          "name_typeahead" : "Pizza Hut Sherpur",
+          "shop_type_id" : 1,
+          "rating" : 0,
+          "reviews" : 0,
+          "commission" : 5,
+          "order_count" : 0,
+          "popularity_value" : 400,
+          "ranking_score" : 1.9512196,
+          "status" : 1,
+          "address" : "Gulshan",
+          "image" : "/restaurant-service/home-logo-a32d-20241230075514196.png",
+          "search_tags" : [
+            "isdelivery",
+            "isdine",
+            "ispickup"
+          ],
+          "service_types" : [
+            "isdelivery",
+            "isdine",
+            "ispickup"
+          ],
+          "location" : {
+            "lat" : 25.0156371,
+            "lon" : 90.0168871
+          }
+        }
+      },
+      {
+        "_index" : "shops-v2",
+        "_id" : "shop-873",
+        "_score" : 1.0,
+        "_source" : {
+          "shop_id" : 873,
+          "id" : "shop-873",
+          "name_exact" : "Dominos Pizza- Maijdee Sadar",
+          "name_fuzzy" : "Dominos Pizza- Maijdee Sadar",
+          "name_typeahead" : "Dominos Pizza- Maijdee Sadar",
+          "shop_type_id" : 1,
+          "rating" : 0,
+          "reviews" : 0,
+          "commission" : 25,
+          "order_count" : 291,
+          "popularity_value" : 2,
+          "ranking_score" : 69.54338,
+          "status" : 1,
+          "address" : "Maijdee, Noakhali",
+          "image" : "/restaurant-service/dominos-7638-20250918100534058.png",
+          "search_tags" : [ ],
+          "service_types" : [
+            "isdelivery",
+            "isdine",
+            "ispickup"
+          ],
+          "location" : {
+            "lat" : 22.8694582,
+            "lon" : 91.0973789
+          }
+        }
+      }
+    ]
+  }
+}

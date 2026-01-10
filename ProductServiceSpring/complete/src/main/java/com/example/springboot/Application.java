@@ -6,8 +6,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 import static com.example.springboot.utils.Constants.TEST_NAME;
 
@@ -25,6 +27,7 @@ public class Application {
 
 
 		SpringApplication.run(Application.class, myArgs);
+
 	}
 
 	@Bean
